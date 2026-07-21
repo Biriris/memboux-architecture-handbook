@@ -2,7 +2,8 @@ name: Markdown quality
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
 
 permissions:
@@ -10,30 +11,37 @@ permissions:
 
 jobs:
   markdownlint:
+    name: Markdown lint
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Lint Markdown
-        uses: DavidAnson/markdownlint-cli2-action@v20
+        uses: DavidAnson/markdownlint-cli2-action@v24
         with:
           globs: |
             **/*.md
             !node_modules/**
 
   links:
+    name: Link check
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Check links
-        uses: lycheeverse/lychee-action@v2
+        uses: lycheeverse/lychee-action@v2.9.0
         with:
           args: >-
+            --root-dir "${{ github.workspace }}"
             --verbose
             --no-progress
-            --exclude-mail
-            "**/*.md"
+            './**/*.md'
           fail: true
+          failIfEmpty: false
+          jobSummary: true
+          token: ${{ secrets.GITHUB_TOKEN }}

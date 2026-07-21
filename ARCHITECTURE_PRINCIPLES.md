@@ -22,6 +22,6 @@ What the principle changes in design and operation.
 
 Principles 001–082 exist in the manuscript and will be migrated into this register.
 
-Next available number:
+## Next available number
 
-**Principle 083**
+Principle 083
